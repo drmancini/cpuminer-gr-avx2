@@ -27,7 +27,7 @@ HashReturn_gr init_groestl256(hashState_groestl256 *ctx, int hashlen) {
     ctx->chaining[i] = _mm_setzero_si128();
     ctx->buffer[i] = _mm_setzero_si128();
   }
-  ((u64 *)ctx->chaining)[COLS - 1] = U64BIG((u64)LENGTH);
+  ((u64 *)ctx->chaining)[COLS2 - 1] = U64BIG((u64)LENGTH2);
   INIT256(ctx->chaining);
   ctx->buf_ptr = 0;
   ctx->rem_ptr = 0;
@@ -202,7 +202,7 @@ int groestl256_full(hashState_groestl256 *ctx, void *output, const void *input,
     ctx->chaining[i] = _mm_setzero_si128();
     ctx->buffer[i] = _mm_setzero_si128();
   }
-  ((u64 *)ctx->chaining)[COLS - 1] = U64BIG((u64)LENGTH);
+  ((u64 *)ctx->chaining)[COLS2 - 1] = U64BIG((u64)LENGTH2);
   INIT256(ctx->chaining);
   ctx->buf_ptr = 0;
   ctx->rem_ptr = 0;

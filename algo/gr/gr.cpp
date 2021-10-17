@@ -58,7 +58,7 @@ __thread uint8_t gr_hash_order[GR_HASH_FUNC_COUNT - 3 + 1];
 
 __thread gr_context_overlay gr_ctx;
 
-__thread uint8_t *hp_state = NULL;
+__thread uint8_t *__restrict__ hp_state = NULL;
 
 static void selectAlgo(const uint8_t nibble, bool *selectedAlgos,
                        uint8_t *selectedIndex, int algoCount,
@@ -277,22 +277,22 @@ void gr_hash(void *output0, const void *input0) {
       sph_whirlpool512_full(&ctx.whirlpool, hash0, hash0, size);
       break;
     case CNTurtlelite:
-      CRYPTONIGHT_HASH(turtlelite);
+      cryptonight_hash<TURTLELITE, true>(hash0, hash0);
       break;
     case CNTurtle:
-      CRYPTONIGHT_HASH(turtle);
+      cryptonight_hash<TURTLE, true>(hash0, hash0);
       break;
     case CNDarklite:
-      CRYPTONIGHT_HASH(darklite);
+      cryptonight_hash<DARKLITE, true>(hash0, hash0);
       break;
     case CNDark:
-      CRYPTONIGHT_HASH(dark);
+      cryptonight_hash<DARK, true>(hash0, hash0);
       break;
     case CNLite:
-      CRYPTONIGHT_HASH(lite);
+      cryptonight_hash<LITE, true>(hash0, hash0);
       break;
     case CNFast:
-      CRYPTONIGHT_HASH(fast);
+      cryptonight_hash<FAST, true>(hash0, hash0);
       break;
     }
     size = 64;

@@ -44,7 +44,7 @@ void gr_hash(void *hash, const void *input0);
 int get_gr_rotation(void *input0);
 
 // Memory state
-extern __thread uint8_t *hp_state;
+extern __thread uint8_t *__restrict__ hp_state;
 
 // Uses hp_state as memory.
 void AllocateNeededMemory();

@@ -40,6 +40,7 @@
 extern "C" {
 #endif
 
+// Taken from keccak-gate.h
 extern int hard_coded_eb;
 
 #include "algo/sha/sph_types.h"

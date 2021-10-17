@@ -1,4 +1,4 @@
-AC_INIT([gr_hash], [1.0])
+AC_INIT([gr_hash], [1.1])
 
 AC_PREREQ([2.59c])
 AC_CANONICAL_SYSTEM

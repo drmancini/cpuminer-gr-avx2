@@ -11,8 +11,7 @@ libgr_a_SOURCES = \
   algo/echo/aes_ni/hash.c \
 	algo/fugue/fugue-aesni.c \
 	algo/fugue/sph_fugue.c \
-  algo/gr/cryptonote/cryptonight.c \
-  algo/gr/gr.c \
+  algo/gr/gr.cpp \
   algo/groestl/sph_groestl.c \
   algo/groestl/aes_ni/hash-groestl.c \
   algo/groestl/aes_ni/hash-groestl256.c \
@@ -20,8 +19,6 @@ libgr_a_SOURCES = \
   algo/jh/sph_jh.c \
   algo/keccak/sph_keccak.c \
   algo/luffa/luffa_for_sse2.c \
-  algo/sha/sph_sha2.c \
-  algo/sha/sha2.c \
   algo/shabal/sph_shabal.c \
   algo/shavite/sph_shavite.c \
   algo/shavite/sph-shavite-aesni.c \
