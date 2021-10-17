@@ -38,7 +38,6 @@
 extern "C" {
 #endif
 
-// Taken from keccak-gate.c
 int hard_coded_eb = 1;
 
 /*
@@ -1688,8 +1687,7 @@ static void keccak_core(sph_keccak_context *kc, const void *data, size_t len,
 #if SPH_KECCAK_64
 
 #define DEFCLOSE(d, lim)                                                       \
-  static void keccak_close##d(sph_keccak_context *kc,                          \
-                              unsigned ub __attribute__((unused)), unsigned n, \
+  static void keccak_close##d(sph_keccak_context *kc, unsigned ub, unsigned n, \
                               void *dst) {                                     \
     unsigned eb;                                                               \
     union {                                                                    \

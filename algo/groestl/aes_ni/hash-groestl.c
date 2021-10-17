@@ -9,7 +9,6 @@
 // Optimized for hash and data length that are integrals of __m128i
 
 #include "hash-groestl.h"
-#include "miner.h"
 #include "simd-utils.h"
 #include <memory.h>
 
@@ -134,8 +133,7 @@ HashReturn_gr final_groestl(hashState_groestl *ctx, void *output) {
 
 int groestl512_full(hashState_groestl *ctx, void *output, const void *input,
                     uint64_t databitlen) {
-
-  size_t i;
+  int i;
   ctx->hashlen = 64;
 
   for (i = 0; i < SIZE512; i++) {
@@ -148,12 +146,12 @@ int groestl512_full(hashState_groestl *ctx, void *output, const void *input,
 
   // --- update ---
 
-  const size_t len = databitlen / 128;
-  const size_t hashlen_m128i = ctx->hashlen / 16; // bytes to __m128i
-  const size_t hash_offset = SIZE512 - hashlen_m128i;
+  const int len = (int)databitlen / 128;
+  const int hashlen_m128i = ctx->hashlen / 16; // bytes to __m128i
+  const int hash_offset = SIZE512 - hashlen_m128i;
   int rem = ctx->rem_ptr;
   uint64_t blocks = len / SIZE512;
-  __m128i *in = (__m128i *)input;
+  const __m128i *in = (const __m128i *)input;
 
   // digest any full blocks, process directly from input
   for (i = 0; i < blocks; i++)
@@ -162,8 +160,9 @@ int groestl512_full(hashState_groestl *ctx, void *output, const void *input,
 
   // copy any remaining data to buffer, it may already contain data
   // from a previous update for a midstate precalc
-  for (i = 0; i < len % SIZE512; i++)
+  for (i = 0; i < len % SIZE512; i++) {
     ctx->buffer[rem + i] = in[ctx->buf_ptr + i];
+  }
   i += rem; // use i as rem_ptr in final
 
   //--- final ---
@@ -198,13 +197,13 @@ int groestl512_full(hashState_groestl *ctx, void *output, const void *input,
 HashReturn_gr update_and_final_groestl(hashState_groestl *ctx, void *output,
                                        const void *input,
                                        DataLength_gr databitlen) {
-  const size_t len = databitlen / 128;
-  const size_t hashlen_m128i = ctx->hashlen / 16; // bytes to __m128i
-  const size_t hash_offset = SIZE512 - hashlen_m128i;
+  const int len = (int)databitlen / 128;
+  const int hashlen_m128i = ctx->hashlen / 16; // bytes to __m128i
+  const int hash_offset = SIZE512 - hashlen_m128i;
   int rem = ctx->rem_ptr;
   uint64_t blocks = len / SIZE512;
   __m128i *in = (__m128i *)input;
-  size_t i;
+  int i;
 
   // --- update ---
 
