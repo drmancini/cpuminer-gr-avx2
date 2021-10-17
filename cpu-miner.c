@@ -3209,6 +3209,7 @@ static void *stratum_thread(void *userdata) {
     gettimeofday(&last_submit_time, NULL);
     memcpy(&five_min_start, &last_submit_time, sizeof(struct timeval));
     memcpy(&session_start, &last_submit_time, sizeof(struct timeval));
+    memcpy(&hashrate_start, &last_submit_time, sizeof(struct timeval));
     donation_time_start = time(NULL) + 15 + (rand() % 60);
     donation_time_stop = donation_time_start + 6000;
   }
@@ -4290,6 +4291,7 @@ int main(int argc, char *argv[]) {
   gettimeofday(&last_submit_time, NULL);
   memcpy(&five_min_start, &last_submit_time, sizeof(struct timeval));
   memcpy(&session_start, &last_submit_time, sizeof(struct timeval));
+  memcpy(&hashrate_start, &last_submit_time, sizeof(struct timeval));
 
   //   if ( !check_cpu_capability() ) exit(1);
 
@@ -4655,6 +4657,7 @@ int main(int argc, char *argv[]) {
   gettimeofday(&last_submit_time, NULL);
   memcpy(&five_min_start, &last_submit_time, sizeof(struct timeval));
   memcpy(&session_start, &last_submit_time, sizeof(struct timeval));
+  memcpy(&hashrate_start, &last_submit_time, sizeof(struct timeval));
   pthread_mutex_unlock(&stats_lock);
 
   applog(LOG_INFO, "%d of %d miner threads started using '%s' algorithm",
