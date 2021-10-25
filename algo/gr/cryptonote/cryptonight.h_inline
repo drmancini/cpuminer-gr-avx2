@@ -552,7 +552,42 @@ void cryptonight_2way_hash(const void *input0, const void *input1,
   CRYPTONIGHT_FINISH(1);
 }
 
-#ifdef __AVX2__
+template <size_t kMemory, size_t kIterations, uint32_t kMask, size_t kShift,
+          size_t kPrefetchW, size_t kPrefetchR, bool kL1Prefetch>
+void cryptonight_3way_hash(const void *input0, const void *input1,
+                           const void *input2, void *output0, void *output1,
+                           void *output2) {
+  uint8_t state[208 * 3] __attribute__((aligned(16)));
+  CRYPTONIGHT_INIT(0);
+  CRYPTONIGHT_INIT(1);
+  CRYPTONIGHT_INIT(2);
+
+  explode_scratchpad<kShift, 3, kPrefetchW>(state, ((__m128i *)l0));
+  CRYPTONIGHT_VARIABLES(0);
+  CRYPTONIGHT_VARIABLES(1);
+  CRYPTONIGHT_VARIABLES(2);
+  constexpr bool kPrefetch = true;
+  for (size_t i = 0; i < kIterations; ++i) {
+    // AES
+    AES(0);
+    AES(1);
+    AES(2);
+
+    TWEAK(0);
+    TWEAK(1);
+    TWEAK(2);
+
+    POST_AES(0);
+    POST_AES(1);
+    POST_AES(2);
+  }
+
+  implode_scratchpad<kMemory, kMemory != kShift, 3, kPrefetchR, kL1Prefetch>(
+      ((const __m128i *)l0), state);
+  CRYPTONIGHT_FINISH(0);
+  CRYPTONIGHT_FINISH(1);
+  CRYPTONIGHT_FINISH(2);
+}
 
 // Requires 4x memory allocated in hp_state.
 template <size_t kMemory, size_t kIterations, uint32_t kMask, size_t kShift,
@@ -598,5 +633,3 @@ void cryptonight_4way_hash(const void *input0, const void *input1,
   CRYPTONIGHT_FINISH(2);
   CRYPTONIGHT_FINISH(3);
 }
-
-#endif // AVX2

@@ -38,7 +38,12 @@ template <size_t kMemory, size_t kIterations, uint32_t kMask, size_t kShift,
           size_t kPrefetchW, size_t kPrefetchR, bool kL1Prefetch>
 void cryptonight_2way_hash(const void *input0, const void *input1,
                            void *output0, void *output1);
-#ifdef __AVX2__
+
+template <size_t kMemory, size_t kIterations, uint32_t kMask, size_t kShift,
+          size_t kPrefetchW, size_t kPrefetchR, bool kL1Prefetch>
+void cryptonight_3way_hash(const void *input0, const void *input1,
+                           const void *input2, void *output0, void *output1,
+                           void *output2);
 
 template <size_t kMemory, size_t kIterations, uint32_t kMask, size_t kShift,
           size_t kPrefetchW, size_t kPrefetchR, bool kL1Prefetch>
@@ -46,8 +51,6 @@ void cryptonight_4way_hash(const void *input0, const void *input1,
                            const void *input2, const void *input3,
                            void *output0, void *output1, void *output2,
                            void *output3);
-
-#endif // AVX2
 
 // Actual implementation of the template functions.
 #include "cryptonight.h_inline"

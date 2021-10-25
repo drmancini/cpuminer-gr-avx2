@@ -12,6 +12,10 @@ libgr_a_SOURCES = \
 	algo/fugue/fugue-aesni.c \
 	algo/fugue/sph_fugue.c \
   algo/gr/gr.cpp \
+  algo/gr/gr-1way.cpp \
+  algo/gr/gr-2way.cpp \
+  algo/gr/gr-3way.cpp \
+  algo/gr/gr-4way.cpp \
   algo/groestl/sph_groestl.c \
   algo/groestl/aes_ni/hash-groestl.c \
   algo/groestl/aes_ni/hash-groestl256.c \
