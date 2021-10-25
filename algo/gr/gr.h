@@ -87,10 +87,13 @@ enum Algo {
 };
 
 // Only 3 CN algos are selected from available 6.
-__thread uint8_t gr_hash_order[GR_HASH_FUNC_COUNT - 3 + 1];
-__thread uint8_t gr_rotation = 0;
+extern __thread uint8_t gr_hash_order[GR_HASH_FUNC_COUNT - 3 + 1];
+extern __thread uint8_t gr_rotation;
 
-__thread gr_context_overlay gr_ctx;
+extern __thread gr_context_overlay gr_ctx;
+
+// Memory state
+extern __thread uint8_t *__restrict__ hp_state;
 
 enum CryptonightConfig { Turtlelite = 0, Turtle, Darklite, Dark, Lite, Fast };
 
@@ -153,6 +156,10 @@ constexpr uint8_t cn[40][3] = {
     {1, 4, 5}, {1, 5, 4}, {2, 3, 4}, {2, 4, 3}, {2, 3, 5},
     {2, 5, 3}, {2, 4, 5}, {2, 5, 4}, {3, 4, 5}, {3, 5, 4}}; // 20
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void gr_hash_1way(void *output0, const void *input0);
 void gr_hash_2way(void *output0, void *output1, const void *input0,
                   const void *input1);
@@ -162,13 +169,15 @@ void gr_hash_4way(void *output0, void *output1, void *output2, void *output3,
                   const void *input0, const void *input1, const void *input2,
                   const void *input3);
 
-void gr_getAlgoString(const uint8_t *block, uint8_t *selectedAlgoOutput);
-int get_config_id(void *hash_order);
 int get_gr_rotation_header(void *header);
 int get_gr_rotation_block(void *block_hash);
 
-// Memory state
-__thread uint8_t *__restrict__ hp_state;
+#ifdef __cplusplus
+}
+#endif
+
+void gr_getAlgoString(const uint8_t *block, uint8_t *selectedAlgoOutput);
+int get_config_id(uint8_t *hash_order);
 
 // Uses hp_state as memory.
 void AllocateNeededMemory();

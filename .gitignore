@@ -5,6 +5,8 @@ cpuminer
 *.d
 gmon.out
 
+libgr.a
+
 autom4te.cache
 .deps
 

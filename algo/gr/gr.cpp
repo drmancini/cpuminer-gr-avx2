@@ -1,6 +1,12 @@
 #include "gr.h"
 #include "virtual_memory.h" // Memory allocation.
 
+__thread uint8_t *__restrict__ hp_state = NULL;
+__thread uint8_t gr_hash_order[GR_HASH_FUNC_COUNT - 3 + 1] = {0};
+__thread uint8_t gr_rotation = 0;
+
+__thread gr_context_overlay gr_ctx;
+
 static void selectAlgo(const uint8_t nibble, bool *selectedAlgos,
                        uint8_t *selectedIndex, int algoCount,
                        int *currentCount) {
