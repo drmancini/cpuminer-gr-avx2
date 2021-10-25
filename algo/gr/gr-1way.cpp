@@ -21,7 +21,7 @@ void gr_hash_1way(void *output0, const void *input0) {
   static __thread uint32_t s_ntime = UINT32_MAX;
   static __thread uint32_t prev_b1 = UINT32_MAX;
   static __thread uint32_t prev_b2 = UINT32_MAX;
-  if (s_ntime != edata[17] && prev_b1 != edata[1] && prev_b2 != edata[2]) {
+  if (s_ntime != edata[17] || prev_b1 != edata[1] || prev_b2 != edata[2]) {
     s_ntime = edata[17];
     prev_b1 = edata[1];
     prev_b2 = edata[2];

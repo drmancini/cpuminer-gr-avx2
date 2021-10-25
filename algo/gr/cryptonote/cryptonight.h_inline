@@ -165,6 +165,10 @@ aes_multikey(const uint8_t *memory, size_t shift) {
             aes_genkey<T>((__m128i *)(memory + shift + 208)),
             aes_genkey<T>((__m128i *)(memory + shift + 208 * 2)),
             aes_genkey<T>((__m128i *)(memory + shift + 208 * 3))};
+  } else if constexpr (kSize == 3) {
+    return {aes_genkey<T>((__m128i *)(memory + shift)),
+            aes_genkey<T>((__m128i *)(memory + shift + 208)),
+            aes_genkey<T>((__m128i *)(memory + shift + 208 * 2))};
   } else if constexpr (kSize == 2) {
     return {aes_genkey<T>((__m128i *)(memory + shift)),
             aes_genkey<T>((__m128i *)(memory + shift + 208))};
